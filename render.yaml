@@ -1,0 +1,30 @@
+services:
+  # Backend API Server
+  - type: web
+    name: mycommunity-backend
+    runtime: node
+    region: singapore
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_CODE
+        value: admin2025
+      - key: FIREBASE_SERVICE_ACCOUNT_PATH
+        sync: false
+    healthCheckPath: /health
+    
+  # MongoDB Database
+databases:
+  - name: mycommunity-db
+    databaseName: connectapp
+    user: connectapp
+    plan: free
