@@ -1,0 +1,51 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
+.env.local
+.env.production
+
+# Flutter
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/.packages
+mobile/build/
+mobile/ios/Flutter/.last_build_id
+mobile/.metadata
+mobile/pubspec.lock
+
+# Android
+mobile/android/.gradle/
+mobile/android/app/build/
+mobile/android/gradle/
+mobile/android/local.properties
+mobile/android/.idea/
+
+# iOS
+mobile/ios/Pods/
+mobile/ios/.symlinks/
+mobile/ios/Flutter/Flutter.framework
+mobile/ios/Flutter/Flutter.podspec
+
+# VS Code
+.vscode/
+
+# IDE
+.idea/
+*.iml
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.sqlite
+*.db
