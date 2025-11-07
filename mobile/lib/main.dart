@@ -41,13 +41,13 @@ class _ConnectAppState extends State<ConnectApp> {
     await auth.init();
     socket = SocketService(auth: auth);
     notifications = SimpleNotificationService();
-    
+
     // Initialize notifications (local only, no Firebase)
     await notifications.initialize();
 
     if (await auth.hasToken()) {
       await socket.connect();
-      
+
       // Listen for various socket events and show notifications
       socket.socket?.on('notification', (data) {
         notifications.showNotification(
@@ -56,7 +56,7 @@ class _ConnectAppState extends State<ConnectApp> {
           data: data,
         );
       });
-      
+
       // Show notification for new alerts
       socket.socket?.on('alert:new', (data) {
         notifications.showNotification(
@@ -65,7 +65,7 @@ class _ConnectAppState extends State<ConnectApp> {
           data: data,
         );
       });
-      
+
       // Show notification for new chat messages (when not in chat screen)
       socket.socket?.on('chat:new_message', (data) {
         notifications.showNotification(

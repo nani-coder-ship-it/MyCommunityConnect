@@ -3,9 +3,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 /// Simple notification service that shows local notifications
 /// This replaces Firebase Cloud Messaging for in-app notifications
 class SimpleNotificationService {
-  final FlutterLocalNotificationsPlugin _local = FlutterLocalNotificationsPlugin();
-  
-  static const AndroidNotificationChannel _defaultChannel = AndroidNotificationChannel(
+  final FlutterLocalNotificationsPlugin _local =
+      FlutterLocalNotificationsPlugin();
+
+  static const AndroidNotificationChannel _defaultChannel =
+      AndroidNotificationChannel(
     'default_channel',
     'General Notifications',
     description: 'Default channel for general notifications',
@@ -19,12 +21,13 @@ class SimpleNotificationService {
       const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
       const initSettings = InitializationSettings(android: androidInit);
       await _local.initialize(initSettings);
-      
+
       // Create notification channel
       await _local
-          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
           ?.createNotificationChannel(_defaultChannel);
-      
+
       print('✅ Local notifications initialized');
     } catch (e) {
       print('⚠️ Notification initialization failed: $e');
@@ -46,7 +49,7 @@ class SimpleNotificationService {
         priority: Priority.high,
         icon: '@mipmap/ic_launcher',
       );
-      
+
       await _local.show(
         DateTime.now().millisecondsSinceEpoch % 100000,
         title,
