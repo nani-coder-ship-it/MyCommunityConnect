@@ -10,7 +10,7 @@ import jwt from 'jsonwebtoken';
 
 import { connectDB } from './config/db.js';
 import { jwtConfig } from './config/jwtConfig.js';
-import { initializeFirebase } from './services/notification.service.js';
+// import { initializeFirebase } from './services/notification.service.js';
 
 // Routes
 import authRoutes from './routes/auth.routes.js';
@@ -27,10 +27,10 @@ import chatRoutes from './routes/chat.routes.js';
 import { Message } from './models/Message.js';
 import { Alert } from './models/Alert.js';
 import { User } from './models/User.js';
-import { sendNotificationToUser, sendNotificationToAll } from './services/notification.service.js';
+// import { sendNotificationToUser, sendNotificationToAll } from './services/notification.service.js';
 
 dotenv.config();
-initializeFirebase();
+// initializeFirebase(); // Skip Firebase for now - notifications work via Socket.IO
 
 const app = express();
 const server = http.createServer(app);
@@ -114,39 +114,39 @@ io.on('connection', async (socket) => {
         const leftId = left.replace('user:', '');
         const recipientId = leftId === String(userId) ? right : leftId;
         if (String(recipientId) !== String(userId)) {
-          console.log('🔔 Attempting to send private chat notification...');
-          sendNotificationToUser(
-            recipientId,
-            {
-              title: `New message from ${userName}`,
-              body: text.substring(0, 100),
-            },
-            {
-              type: 'chat_message',
-              roomId,
-              senderId: userId.toString(),
-            }
-          )
-            .then((result) => console.log('✅ Private chat notification result:', result))
-            .catch((err) => console.error('❌ Failed to send private chat notification:', err));
+          console.log('🔔 Notification skipped (Firebase disabled) - private chat');
+          // sendNotificationToUser(
+          //   recipientId,
+          //   {
+          //     title: `New message from ${userName}`,
+          //     body: text.substring(0, 100),
+          //   },
+          //   {
+          //     type: 'chat_message',
+          //     roomId,
+          //     senderId: userId.toString(),
+          //   }
+          // )
+          //   .then((result) => console.log('✅ Private chat notification result:', result))
+          //   .catch((err) => console.error('❌ Failed to send private chat notification:', err));
         }
       }
     } else {
       // Any room that doesn't start with 'user:' is treated as a group chat
-      console.log('🔔 Attempting to send group chat notification...');
-      sendNotificationToAll(
-        imageUrl
-          ? { title: `${userName} in ${roomId}`, body: 'sent a photo' }
-          : { title: `${userName} in ${roomId}`, body: (text || '').substring(0, 100) },
-        {
-          type: 'chat_message',
-          roomId,
-          senderId: userId.toString(),
-        },
-        [userId]
-      )
-        .then((result) => console.log('✅ Group chat notification result:', result))
-        .catch((err) => console.error('❌ Failed to send group chat notification:', err));
+      console.log('🔔 Notification skipped (Firebase disabled) - group chat');
+      // sendNotificationToAll(
+      //   imageUrl
+      //     ? { title: `${userName} in ${roomId}`, body: 'sent a photo' }
+      //     : { title: `${userName} in ${roomId}`, body: (text || '').substring(0, 100) },
+      //   {
+      //     type: 'chat_message',
+      //     roomId,
+      //     senderId: userId.toString(),
+      //   },
+      //   [userId]
+      // )
+      //   .then((result) => console.log('✅ Group chat notification result:', result))
+      //   .catch((err) => console.error('❌ Failed to send group chat notification:', err));
     }
   });
 
@@ -215,21 +215,21 @@ io.on('connection', async (socket) => {
     io.to('residents').emit('alert:new', a);
     
     // Send push notification to all residents
-    console.log('🔔 Attempting to send alert notification...');
-    sendNotificationToAll(
-      {
-        title: `🚨 ${alertType} Alert`,
-        body: `${userName}: ${details}`,
-      },
-      {
-        type: 'alert',
-        alertId: a._id.toString(),
-        alertType,
-      },
-      [userId]
-    )
-      .then((result) => console.log('✅ Alert notification result:', result))
-      .catch((err) => console.error('❌ Failed to send alert notification:', err));
+    console.log('🔔 Notification skipped (Firebase disabled) - alert');
+    // sendNotificationToAll(
+    //   {
+    //     title: `🚨 ${alertType} Alert`,
+    //     body: `${userName}: ${details}`,
+    //   },
+    //   {
+    //     type: 'alert',
+    //     alertId: a._id.toString(),
+    //     alertType,
+    //   },
+    //   [userId]
+    // )
+    //   .then((result) => console.log('✅ Alert notification result:', result))
+    //   .catch((err) => console.error('❌ Failed to send alert notification:', err));
   });
 
   socket.on('disconnect', () => {});
