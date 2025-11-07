@@ -12,7 +12,7 @@ class ConfigService {
   // Production server URL - update this before deployment
   // For production, use your deployed server URL (e.g., https://yourdomain.com)
   // For development, use local IP (e.g., http://192.168.1.100:4000)
-  static const String _kDefaultBaseUrl = 'http://10.109.132.6:4000';
+  static const String _kDefaultBaseUrl = 'https://mycommunityconnect.onrender.com';
 
   String _cachedBaseUrl = _kDefaultBaseUrl;
   bool _loaded = false;
