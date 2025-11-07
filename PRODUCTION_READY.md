@@ -10,12 +10,18 @@
 
 ## 📱 Test Login Credentials
 
-Use these credentials to test the app:
+### Admin Account:
+**Email**: `admin@test.com`
+**Password**: `admin123`
+**Flat**: A101
 
-**Email**: `test@test.com`
-**Password**: `password123`
+### Resident Account:
+**Email**: `resident@test.com`
+**Password**: `resident123`
+**Flat**: B202
 
 OR create a new account in the app (Register screen)
+**Note**: Use `admin2025` code during registration to become admin
 
 ---
 
@@ -34,10 +40,10 @@ OR create a new account in the app (Register screen)
 
 ## 📊 Database Status:
 
-- **Users**: 1 test user
+- **Users**: 2 test users (admin + resident)
 - **Contacts**: 6 emergency/community contacts
-- **Posts**: 2 test posts
-- **Events**: 1 test event
+- **Posts**: Community posts
+- **Events**: Community events
 
 ---
 
